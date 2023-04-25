@@ -31,6 +31,8 @@ try {
   await page.type("#user", auth.user);
   await page.type("#pass", auth.pass);
   await page.click('button[type="submit"]');
+
+  //Create Tidy Array Function
   const createTidyArray = async () => {
     try {
       // Navigate to the URL
@@ -51,38 +53,43 @@ try {
       );
       // Excludes values
       const excludedValues = ["Nome", "Email", "Ações", "", "not found"];
-      const tidyArr = nextSiblingTextArray.map((str) => str.trim()).filter((str) => !excludedValues.includes(str));
-      console.log(tidyArr);
+      let tidyArr = nextSiblingTextArray.map((str) => str.trim()).filter((str) => !excludedValues.includes(str));
+      // console.log(tidyArr);
       if (tidyArr.length != 0) {
         fs.writeFileSync("./variables/tidyArr.txt", tidyArr.toString());
       }
       return tidyArr;
     } catch (err) {
-      console.error(error);
+      console.error(err);
     }
   };
 
-  // Checks to see if repeated name
+  //// Checks to see if repeated name
   let tidyArr = await createTidyArray();
-  console.log(tidyArr);
-  console.log(cliente.split);
+  console.log(`tidyArr split: ${tidyArr}`);
+  console.log(`cliente split: ${cliente}`);
 
   if (tidyArr.length === 0) {
-    console.log("No new quota. Process ended.");
+    console.log("No new quota. Process ended. 🔚");
   } else {
-    console.log(`ID exists, Create Array and Update id" \n ${tidyArr}`);
+    console.log(`ID exists, Create Array and Update id 🟢" \n ${tidyArr}`);
     let quotaString = "";
 
     //While Loop
     while (tidyArr.length != 0) {
-      if (tidyArr.some((el) => cliente.includes(el))) {
-        console.log("Repeating CLient", ID);
+      if (tidyArr.some((el) => cliente.toLowerCase().includes(el.toLowerCase()))) {
+        console.log("Repeating CLient ❌", ID);
         ID += 1;
         fs.writeFileSync("./variables/id.txt", ID.toString());
-        console.log("ID changed", ID);
+        ///////////////////////////////fs.writeFileSync("./variables/tidyArr.txt", cliente.toString()); TEST
+
+        console.log("ID changed 🔃", ID);
 
         tidyArr = await createTidyArray();
       } else {
+        console.log(`tidyArr: ${tidyArr}`);
+        console.log(`cliente: ${cliente}`);
+
         await page.click(`button[title="Editar"]`);
 
         let sections = [
@@ -104,11 +111,11 @@ try {
         for (const section of sections) {
           const labelElem = await page.waitForSelector(`label[for="${section}"]`);
           const elemText = await labelElem.evaluate((el) => el.textContent);
-          console.log(elemText);
+          // console.log(elemText);
 
           const valueSelect = await page.waitForSelector(`input[id="${section}"]`);
           const value = await valueSelect.evaluate((el) => el.value);
-          console.log(value);
+          // console.log(value);
 
           quota[elemText] = value;
         }
@@ -122,7 +129,7 @@ try {
         // console.log(value);
 
         quota[elemText] = value;
-        console.log(quota);
+        // console.log(quota);
 
         let quotaSingle = `
 Data Castro: ${quota["Data Cadastro:"]}
@@ -141,17 +148,25 @@ _______________________________`;
 
         quotaString += quotaSingle;
         ID += 1;
+        try {
+          cliente = fs.readFileSync("./variables/tidyArr.txt", "utf8");
+        } catch (err) {
+          if (err.code !== "ENOENT") {
+            throw err;
+          }
+        }
+        console.log(cliente);
 
         fs.writeFileSync("./variables/id.txt", ID.toString());
-        console.log(quotaString);
-        console.log("ID changed", ID);
+        // console.log(quotaString);
+        console.log("ID changed ✅", ID);
         tidyArr = await createTidyArray();
       }
     }
 
-    // Send Email
+    //Send Email
     if (quotaString === "") {
-      console.log("No new Quota");
+      console.log("No new Quota ❌");
     } else {
       let transporter = nodemailer.createTransport({
         service: "gmail",
@@ -163,12 +178,12 @@ _______________________________`;
 
       let gmailMessage = {
         from: `${auth.gmailUser}`,
-        to: `${auth.gmailUser}`,
+        to: `${auth.gmailReceiver}`,
         subject: "Orçamento Site",
         text: `Boa Tarde Fran, segue o orçamento do site.
-        
-        ${quotaString}
-        `,
+
+            ${quotaString}
+            `,
       };
 
       transporter.sendMail(gmailMessage, (error, info) => {
