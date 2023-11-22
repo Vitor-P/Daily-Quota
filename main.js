@@ -70,7 +70,7 @@ try {
   console.log(`cliente split: ${cliente}`);
 
   if (tidyArr.length === 0) {
-    console.log("No new quota. Process ended. 🔚");
+    console.log(`No new quota ${new Date()}. Process ended. 🔚`);
   } else {
     console.log(`ID exists, Create Array and Update id 🟢" \n ${tidyArr}`);
     let quotaString = "";
