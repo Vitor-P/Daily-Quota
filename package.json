@@ -4,7 +4,7 @@
     "puppeteer": "^19.8.3"
   },
   "scripts": {
-    "start": "node main.js"
+    "export_quota": "node main.js"
   },
   "repository": {
     "type": "git",
