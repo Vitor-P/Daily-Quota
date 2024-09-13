@@ -123,3 +123,11 @@ Elson Gomes de Vasconcelos,TURBINAS@TERRA.COM.BR
 tidyArr split: 
 cliente split: Elson Gomes de Vasconcelos,TURBINAS@TERRA.COM.BR
 No new quota Fri Sep 13 2024 00:12:51 GMT-0300 (Brasilia Standard Time). Process ended. 🔚
+
+> export_quota
+> node main.js
+
+Elson Gomes de Vasconcelos,TURBINAS@TERRA.COM.BR
+tidyArr split: 
+cliente split: Elson Gomes de Vasconcelos,TURBINAS@TERRA.COM.BR
+No new quota Fri Sep 13 2024 01:25:50 GMT-0300 (Brasilia Standard Time). Process ended. 🔚
