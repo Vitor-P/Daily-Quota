@@ -2,3 +2,4 @@ node_modules
 auth.js
 history.log
 output.log
+git-output.log
