@@ -202,6 +202,7 @@ _______________________________`;
           console.log("Error occurred while sending email:", error.message);
         } else {
           console.log("Message sent:", info.response);
+          console.log(`${new Date()}`);
         }
       });
     }
