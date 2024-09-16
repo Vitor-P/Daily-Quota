@@ -68,7 +68,11 @@ try {
       retryCount++;
       if (retryCount < maxRetries) {
         console.log(`Retry attempt ${retryCount}. Retrying in 5 seconds...`);
-        setTimeout(createTidyArray, 5000); // Retry after 5 seconds
+        return new Promise((resolve) => {
+          setTimeout(async () => {
+            resolve(await createTidyArray());
+          }, 5000); // Retry after 5 seconds
+        });
       } else {
         console.log("Max retry limit reached. Stopping further attempts.");
       }
