@@ -32,6 +32,9 @@ try {
   await page.type("#pass", auth.pass);
   await page.click('button[type="submit"]');
 
+  let maxRetries = 5; // Set the maximum number of retries
+  let retryCount = 0; // Initialize retry counter
+
   //Create Tidy Array Function
   const createTidyArray = async () => {
     try {
@@ -62,6 +65,13 @@ try {
       return tidyArr;
     } catch (err) {
       console.error(err);
+      retryCount++;
+      if (retryCount < maxRetries) {
+        console.log(`Retry attempt ${retryCount}. Retrying in 5 seconds...`);
+        setTimeout(createTidyArray, 5000); // Retry after 5 seconds
+      } else {
+        console.log("Max retry limit reached. Stopping further attempts.");
+      }
     }
   };
 
