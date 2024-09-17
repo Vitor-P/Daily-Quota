@@ -66,3 +66,6 @@ warning: in the working copy of 'git-output.log', LF will be replaced by CRLF th
  1 file changed, 7 insertions(+)
 To https://github.com/Vitor-P/Daily-Quota.git
    e121671..9452d2d  main -> main
+ECHO is on.
+--- 
+START OF NEW ENTRY 
