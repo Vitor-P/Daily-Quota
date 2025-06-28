@@ -39,7 +39,7 @@ try {
   const createTidyArray = async () => {
     try {
       // Navigate to the URL
-      await page.goto("https://rhemamaquinas.com.br/admin/formulario", { waitUntil: "networkidle2" });
+      await page.goto("https://rhemamaquinas.com.br/admin/formulario");
       await page.waitForSelector('input[aria-controls="listagem"]');
 
       // Type the ID value into the input element
