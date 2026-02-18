@@ -53,7 +53,7 @@ try {
         tds.map((td) => {
           const nextSibling = td.nextElementSibling;
           return nextSibling ? nextSibling.textContent : "not found";
-        })
+        }),
       );
       // Excludes values
       const excludedValues = ["Nome", "Email", "Ações", "", "not found"];
