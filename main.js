@@ -147,7 +147,7 @@ try {
         // console.log(quota);
 
         let quotaSingle = `
-Data Castro: ${quota["Data Cadastro:"]}
+Data Cadastro: ${quota["Data Cadastro:"]}
 Titulo da página: ${quota["Titulo da página"]}
 Nome: ${quota["Nome:"]}
 Produto: ${quota["Produto:"]}
