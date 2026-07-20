@@ -21,6 +21,7 @@ try {
   if (err.code !== "ENOENT") {
     throw err;
   }
+  console.log(ID);
 }
 
 (async () => {
